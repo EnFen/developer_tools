@@ -1,0 +1,21 @@
+SET @buildId = 3533;
+UPDATE
+    enigmabuilds
+SET
+    success_rate = (
+        SELECT COUNT(*) FROM enigmatasks WHERE build_id = @buildId AND status_id IN (1, 101)
+    )/initial_candidate_count * 100,
+    failure_rate = (
+        SELECT COUNT(*) FROM enigmatasks WHERE build_id = @buildId AND status_id IN (2, 102)
+    )/initial_candidate_count * 100,
+    error_rate = (
+        SELECT COUNT(*) FROM enigmatasks WHERE build_id = @buildId AND status_id IN (3, 103)
+    )/initial_candidate_count * 100,
+    completion_rate = (
+        SELECT COUNT(*) FROM enigmatasks WHERE build_id = @buildId
+    ) / initial_candidate_count * 100,
+    processed_candidate_count = (
+        SELECT COUNT(*) FROM enigmatasks WHERE build_id = @buildId
+    )
+WHERE
+    id = @buildId;

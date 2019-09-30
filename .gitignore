@@ -1,0 +1,6 @@
+.env
+**node_modules
+**package-lock.json
+**/true_types/*.csv
+**/matrix_template_files/*.csv
+
